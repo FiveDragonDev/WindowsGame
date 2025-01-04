@@ -6,7 +6,7 @@ public abstract class EffectSource : MonoBehaviour, IInteractable
     public UnityEvent OnInteract => _onInteract;
     public IEffect Effect => _effect;
 
-    protected IEffect _effect;
+    [SerializeReference] protected IEffect _effect;
 
     private readonly UnityEvent _onInteract = new();
 

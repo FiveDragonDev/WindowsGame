@@ -4,6 +4,9 @@ public class Player : MonoBehaviour
 {
     public static Player Singleton { get; private set; }
 
+    [SerializeField, Min(0)] private float _bulletSpeed = 1;
+    [SerializeField, Min(0)] private float _bulletDamage = 1;
+
     private Spring _joint;
     private Pickupable _pickupable;
     private RaycastHit2D _hit;
@@ -24,16 +27,14 @@ public class Player : MonoBehaviour
     private void Update()
     {
         transform.position = _camera.ScreenToWorldPoint(Input.mousePosition);
-        /*if (_joint)
-            _joint.transform.rotation = Quaternion.Lerp(_joint.transform.rotation,
-            Quaternion.Euler(16 * Mathf.Clamp(Input.GetAxis("Mouse X"), -1, 1) * Vector3.back),
-            Time.deltaTime * 8);*/
 
-        _hit = Physics2D.Raycast(transform.position, Vector3.forward);
-        if (_hit && !_hit.collider.isTrigger && !_joint &&
-            _hit.collider.TryGetComponent(out IInteractable interactable))
+        if (Input.GetMouseButtonDown(0) && !_pickupable)
         {
-            if (Input.GetMouseButtonDown(0)) Interact(interactable);
+            _hit = Physics2D.Raycast(transform.position, Vector3.forward);
+            if (_hit && !_hit.collider.isTrigger &&
+                _hit.collider.TryGetComponent(out IInteractable interactable))
+                Interact(interactable);
+            else Shoot();
         }
         else if (Input.GetMouseButtonUp(0) && _pickupable) Throw();
     }
@@ -61,4 +62,17 @@ public class Player : MonoBehaviour
         _joint = null;
         _pickupable = null;
     }
+
+    private void Shoot()
+    {
+        var cursor = GameWorld.MiniCursorsPool.GetItem().GetComponent<MiniCursor>();
+        cursor.transform.position = transform.position;
+        var enemy = UnityUtils.GetClosestObjectByType<Enemy>();
+        var direction = Vector2.up;
+        if (enemy) direction = (enemy.transform.position - transform.position).normalized;
+        cursor.transform.up = direction;
+        cursor.Setup(_bulletSpeed, _bulletDamage);
+        cursor.OnDestroy.AddListener(() => GameWorld.MiniCursorsPool.Release(cursor.gameObject));
+    }
+
 }

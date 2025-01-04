@@ -18,8 +18,7 @@ public class Pickupable : MonoBehaviour, IInteractable
     private void Start() => _rigidbody = GetComponent<Rigidbody2D>();
     private void OnCollisionEnter2D(Collision2D other)
     {
-        float damage = 0;
-        if (_rigidbody) damage += _rigidbody.velocity.magnitude / 10;
+        float damage = _rigidbody.velocity.magnitude / 10;
         if (other.rigidbody) damage += other.rigidbody.velocity.magnitude / 10;
 
         if (TryGetComponent(out IHealth thisHealth)) thisHealth.Damage(damage);

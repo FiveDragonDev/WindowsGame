@@ -11,6 +11,7 @@ public class Mine : Pickupable, IHealth
     public UnityEvent<float> OnDamage => _ondamage;
     public UnityEvent OnDie => _onDie;
 
+    [SerializeField] private GameObject _explosionVFX;
     [SerializeField, Min(0)] private float _explosionOffset = 1;
     [SerializeField, Min(0)] private float _explosionRadius = 1;
     [SerializeField, Min(0)] private float _explosionForce = 1;
@@ -78,6 +79,7 @@ public class Mine : Pickupable, IHealth
         }
         _explode = false;
 
+        Instantiate(_explosionVFX, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 

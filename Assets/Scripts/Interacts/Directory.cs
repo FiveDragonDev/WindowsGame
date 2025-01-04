@@ -6,12 +6,11 @@ public class Directory : Pickupable, IGun
     public int Ammo => _ammo;
     public float FireRate => _fireRate;
     public float DamagePerBullet => _damage;
-    public IBullet Bullet => _file;
+    public IBullet Bullet => GameWorld.FilesPool.Prefab.GetComponent<IBullet>();
     public int BulletsPerShot => _bulletsPerShot;
     public float Accuracy => _accuracy;
 
     [SerializeField] private Sprite _full, _empty, _closed;
-    [SerializeField] private File _file;
     [SerializeField] private GameObject _filesFX;
     [SerializeField, Min(0)] private float _fileSpeed = 1;
     [SerializeField, Min(0)] private float _damage = 1;
@@ -25,13 +24,10 @@ public class Directory : Pickupable, IGun
     private Vector2 _direction;
     private SpriteRenderer _renderer;
 
-    private GameObjectPool _pool;
-
     private void Start()
     {
         _renderer = GetComponent<SpriteRenderer>();
         _rigidbody = GetComponent<Rigidbody2D>();
-        _pool = new(_file.gameObject, 0);
         _ammo = _maxAmmo;
     }
     private void Update()
@@ -59,15 +55,15 @@ public class Directory : Pickupable, IGun
         if (_rigidbody.velocity != Vector2.zero) _direction = _rigidbody.velocity.normalized;
         for (int i = 0; i < BulletsPerShot; i++)
         {
-            var file = _pool.GetItem();
+            var file = GameWorld.FilesPool.GetItem();
             file.transform.position = transform.position;
             file.transform.up = (_direction + Random.insideUnitCircle / Accuracy).normalized;
             var speed = _fileSpeed + _rigidbody.velocity.magnitude / 5;
             var damage = DamagePerBullet + _rigidbody.velocity.magnitude / 5;
             var fileComponent = file.GetComponent<File>();
             fileComponent.Setup(speed, damage);
-            fileComponent.OnDestroy.AddListener(() => _pool.Release(file));
-            recoilForce += speed * 2 * (Vector2)file.transform.up;
+            fileComponent.OnDestroy.AddListener(() => GameWorld.FilesPool.Release(file));
+            recoilForce += speed / 2 * (Vector2)file.transform.up;
         }
         _rigidbody.velocity += recoilForce / _bulletsPerShot;
         Instantiate(_filesFX, transform.position, Quaternion.LookRotation(transform.up));

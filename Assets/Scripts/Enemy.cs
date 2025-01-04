@@ -38,7 +38,7 @@ public class Enemy : MonoBehaviour, IHealth
     }
     private void Update()
     {
-        if (Vector2.Distance(_player.position, transform.position) < 0.3f)
+        if (Vector2.Distance(_player.position, transform.position) < 0.35f)
             _attack.Attack();
     }
     private void FixedUpdate() => _movement.Move(_rigidbody, _player);

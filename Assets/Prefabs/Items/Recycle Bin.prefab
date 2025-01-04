@@ -176,7 +176,7 @@ MonoBehaviour:
   _file: {fileID: -4106821020089280778, guid: ab3063b15685cba42a97bf7059466c18, type: 3}
   _filesFX: {fileID: 8284166552274037440, guid: 2bac35410a343174c82c4872b4b3bd16, type: 3}
   _fileSpeed: 10
-  _damage: 3
+  _damage: 4
   _fireRate: 4
   _bulletsPerShot: 5
   _accuracy: 2.5

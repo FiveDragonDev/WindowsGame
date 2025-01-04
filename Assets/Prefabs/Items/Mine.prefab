@@ -161,6 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a0a6bafd2a58cd4fb7af995bd0573a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _explosionVFX: {fileID: 163285002896883555, guid: 052bccdaafd87c24fa24e211037e20db, type: 3}
   _explosionOffset: 0.22
   _explosionRadius: 4
   _explosionForce: 6.5

@@ -40,10 +40,13 @@ public class Pool<T> : IEnumerable<T> where T : new()
 
 public sealed class GameObjectPool : Pool<GameObject>
 {
+    public Transform Parent => _parent;
+    public GameObject Prefab => _prefab;
+
     private readonly Transform _parent;
     private readonly GameObject _prefab;
 
-    public GameObjectPool(GameObject prefab, int amount, Transform parent = null)
+    public GameObjectPool(GameObject prefab, int amount = 0, Transform parent = null)
     {
         _prefab = prefab;
         _parent = parent;

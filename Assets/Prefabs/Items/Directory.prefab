@@ -175,7 +175,7 @@ MonoBehaviour:
   _empty: {fileID: 21300000, guid: cf026024cbbf06d488565acef7a1b8ac, type: 3}
   _closed: {fileID: 21300000, guid: f8282cae64bd8d849b40cc2491ea56f4, type: 3}
   _file: {fileID: -4106821020089280778, guid: ab3063b15685cba42a97bf7059466c18, type: 3}
-  _filesFX: {fileID: 8284166552274037440, guid: 2bac35410a343174c82c4872b4b3bd16, type: 3}
+  _filesFX: {fileID: 8284166552274037440, guid: 5e454c0f8190b1543b68397a30bcf520, type: 3}
   _fileSpeed: 9
   _damage: 6
   _fireRate: 5
