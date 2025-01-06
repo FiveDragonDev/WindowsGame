@@ -54,5 +54,6 @@ public abstract class StandartBulletBase : MonoBehaviour, IBullet
     {
         CancelInvoke(nameof(Hide));
         OnHide?.Invoke();
+        OnHide?.RemoveAllListeners();
     }
 }
