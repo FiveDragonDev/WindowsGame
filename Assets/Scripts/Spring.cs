@@ -46,7 +46,7 @@ public class Spring : MonoBehaviour
     private Rigidbody2D _rigidbody;
 
     private void Start() => _rigidbody = GetComponent<Rigidbody2D>();
-    private void Update()
+    private void FixedUpdate()
     {
         if (ConnectedRigidbody == null) return;
         var force = SpringForce;
@@ -57,6 +57,7 @@ public class Spring : MonoBehaviour
         }
 
         var direction = (ConnectedRigidbody.position - Position).normalized;
-        _rigidbody.AddForce((direction * force) - _rigidbody.velocity * Damping);
+        _rigidbody.AddForceAtPosition((direction * force) -
+            _rigidbody.velocity * Damping, Position);
     }
 }

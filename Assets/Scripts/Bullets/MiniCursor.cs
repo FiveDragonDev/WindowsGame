@@ -1,4 +1,4 @@
 public class MiniCursor : StandartBulletBase
 {
-    public override float DestroyTime => 4;
+    public override float CheckRadius => 0.025f;
 }

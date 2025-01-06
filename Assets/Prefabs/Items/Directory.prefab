@@ -171,14 +171,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08294ecff8ff1974cb0b8f768e6715ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _full: {fileID: 21300000, guid: 60e3d2fefa441e148a2ffece0c7a43f6, type: 3}
-  _empty: {fileID: 21300000, guid: cf026024cbbf06d488565acef7a1b8ac, type: 3}
-  _closed: {fileID: 21300000, guid: f8282cae64bd8d849b40cc2491ea56f4, type: 3}
-  _file: {fileID: -4106821020089280778, guid: ab3063b15685cba42a97bf7059466c18, type: 3}
   _filesFX: {fileID: 8284166552274037440, guid: 5e454c0f8190b1543b68397a30bcf520, type: 3}
   _fileSpeed: 9
   _damage: 6
-  _fireRate: 5
-  _bulletsPerShot: 2
+  _fireRate: 6
+  _bulletsPerShot: 1
   _accuracy: 6
   _maxAmmo: 8
+  _full: {fileID: 21300000, guid: 60e3d2fefa441e148a2ffece0c7a43f6, type: 3}
+  _empty: {fileID: 21300000, guid: cf026024cbbf06d488565acef7a1b8ac, type: 3}
+  _closed: {fileID: 21300000, guid: f8282cae64bd8d849b40cc2491ea56f4, type: 3}

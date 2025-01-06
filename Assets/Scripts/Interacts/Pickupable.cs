@@ -16,7 +16,7 @@ public class Pickupable : MonoBehaviour, IInteractable
     protected Rigidbody2D _rigidbody;
 
     private void Start() => _rigidbody = GetComponent<Rigidbody2D>();
-    private void OnCollisionEnter2D(Collision2D other)
+    protected virtual void OnCollisionEnter2D(Collision2D other)
     {
         float damage = _rigidbody.velocity.magnitude / 10;
         if (other.rigidbody) damage += other.rigidbody.velocity.magnitude / 10;

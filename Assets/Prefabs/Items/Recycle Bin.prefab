@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 764832170729148408}
   - component: {fileID: 912120448594417558}
-  - component: {fileID: 4755539832121569344}
+  - component: {fileID: 8683907542479976951}
   - component: {fileID: 4626926168086929634}
   - component: {fileID: 7139266029927475506}
   m_Layer: 0
@@ -87,8 +87,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &4755539832121569344
-BoxCollider2D:
+--- !u!60 &8683907542479976951
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -129,9 +129,16 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.75, y: 0.75}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.12389159, y: 0.39753455}
+      - {x: -0.3947177, y: 0.30713138}
+      - {x: -0.32429695, y: -0.21184042}
+      - {x: 0.028249502, y: -0.38666067}
+      - {x: 0.22210956, y: -0.305504}
+      - {x: 0.33513546, y: 0.1289083}
+      - {x: 0.3415277, y: 0.23842816}
+  m_UseDelaunayMesh: 0
 --- !u!50 &4626926168086929634
 Rigidbody2D:
   serializedVersion: 4
@@ -158,7 +165,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!114 &7139266029927475506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,13 +178,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bcaad1d9890a794b9ac0b106794db61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _full: {fileID: 21300000, guid: 9fe4402167c063544b68225e12828037, type: 3}
-  _empty: {fileID: 21300000, guid: d522f6403b7581d44b02d45e98c5b7ac, type: 3}
-  _file: {fileID: -4106821020089280778, guid: ab3063b15685cba42a97bf7059466c18, type: 3}
   _filesFX: {fileID: 8284166552274037440, guid: 2bac35410a343174c82c4872b4b3bd16, type: 3}
   _fileSpeed: 10
-  _damage: 4
-  _fireRate: 4
+  _damage: 3
+  _fireRate: 5
   _bulletsPerShot: 5
-  _accuracy: 2.5
-  _maxAmmo: 14
+  _accuracy: 3
+  _maxAmmo: 15
+  _full: {fileID: 21300000, guid: 9fe4402167c063544b68225e12828037, type: 3}
+  _empty: {fileID: 21300000, guid: d522f6403b7581d44b02d45e98c5b7ac, type: 3}

@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Pool<T> : IEnumerable<T> where T : new()
+public class Pool<T> : IEnumerable<T>
 {
+    public int AllAmount => All.Count;
+    public int UsedAmount => _used.Count;
+    public int AvaibleAmount => _available.Count;
+
+    protected HashSet<T> All => _available.Concat(_used).ToHashSet();
+
     protected readonly Queue<T> _available = new();
     protected readonly HashSet<T> _used = new();
-
-    protected readonly HashSet<T> _all = new();
 
     public virtual T GetItem()
     {
@@ -20,21 +24,21 @@ public class Pool<T> : IEnumerable<T> where T : new()
     }
     public virtual void Release(T item)
     {
-        if (_used.Remove(item)) _available.Enqueue(item);
+        if (!_used.Contains(item) || _used.Remove(item))
+            _available.Enqueue(item);
     }
     public virtual void ReleaseAll()
     {
-        while (_used.Count > 0) Release(_used.First());
+        while (UsedAmount > 0) Release(_used.First());
     }
 
     protected virtual void CreateNewObject()
     {
         T newItem = System.Activator.CreateInstance<T>();
-        _all.Add(newItem);
         _available.Enqueue(newItem);
     }
 
-    public IEnumerator<T> GetEnumerator() => _all.GetEnumerator();
+    public IEnumerator<T> GetEnumerator() => All.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }
 
@@ -64,7 +68,7 @@ public sealed class GameObjectPool : Pool<GameObject>
     }
     public override void Release(GameObject item)
     {
-        if (_used.Remove(item))
+        if (!_used.Contains(item) || _used.Remove(item))
         {
             item.SetActive(false);
             _available.Enqueue(item);
@@ -84,7 +88,6 @@ public sealed class GameObjectPool : Pool<GameObject>
     {
         var gameObject = Object.Instantiate(_prefab, Vector3.zero, Quaternion.identity, _parent);
         gameObject.SetActive(false);
-        _all.Add(gameObject);
         _available.Enqueue(gameObject);
     }
 }

@@ -175,4 +175,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b24433bddb7271459e8032d4add5d7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healAmount: 15
+  _effect:
+    rid: -2
+  _healAmount: 10
+  _healDuration: 3
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
