@@ -35,7 +35,6 @@ public class Mine : Pickupable, IHealth
         _renderer = GetComponent<SpriteRenderer>();
         _health = MaxHealth;
     }
-
     private void Update()
     {
         if (_explode)
@@ -48,6 +47,8 @@ public class Mine : Pickupable, IHealth
 
         static float Quad(float x) => x * x;
     }
+
+    protected override void OnUse() => Explode();
 
     private void Explode()
     {

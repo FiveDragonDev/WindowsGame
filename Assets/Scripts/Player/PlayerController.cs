@@ -56,21 +56,21 @@ public sealed class PlayerController : MonoBehaviour, IGun, IEffectable
 
         if (!_pickupable)
         {
-            if (Input.GetMouseButtonDown(1)) Shoot();
-            if (Input.GetMouseButtonDown(0))
+            _hit = Physics2D.Raycast(transform.position, Vector3.forward);
+            if (_hit && !_hit.collider.isTrigger)
             {
-                _hit = Physics2D.Raycast(transform.position, Vector3.forward);
-                if (_hit && !_hit.collider.isTrigger)
+                if (_hit.collider.TryGetComponent(out IInteractable interactable))
                 {
-                    if (_hit.collider.TryGetComponent(out IInteractable interactable))
-                        Interact(interactable);
+                    if (Input.GetMouseButtonDown(0)) Interact(interactable);
+                    if (Input.GetMouseButtonDown(1)) Use(interactable);
                 }
             }
+            else if (Input.GetMouseButtonDown(1)) Shoot();
         }
         else
         {
             if (Input.GetMouseButtonUp(0)) Throw();
-            if (Input.GetMouseButtonDown(1)) Use(_pickupable);
+            if (Input.GetMouseButton(1)) Use(_pickupable);
         }
     }
 

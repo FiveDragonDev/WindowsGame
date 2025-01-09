@@ -151,7 +151,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 2.5
+  m_Mass: 1.2
   m_LinearDrag: 7
   m_AngularDrag: 7
   m_GravityScale: 0
@@ -184,7 +184,7 @@ MonoBehaviour:
   _damage: 3
   _fireRate: 5
   _bulletsPerShot: 4
-  _accuracy: 3
+  _accuracy: 2
   _maxAmmo: 15
   _full: {fileID: 21300000, guid: 9fe4402167c063544b68225e12828037, type: 3}
   _empty: {fileID: 21300000, guid: d522f6403b7581d44b02d45e98c5b7ac, type: 3}

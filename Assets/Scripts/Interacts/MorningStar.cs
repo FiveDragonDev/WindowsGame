@@ -34,6 +34,7 @@ public sealed class MorningStar : MonoBehaviour
     {
         _handle.GetComponent<Rigidbody2D>().mass = 0.66f;
         _star.gameObject.AddComponent<Pickupable>();
+        Destroy(_joint);
         Destroy(_star);
         Destroy(_renderer);
     }

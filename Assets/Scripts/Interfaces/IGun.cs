@@ -59,7 +59,7 @@ public abstract class StandartFileGunBase : Pickupable, IGun
             fileComponent.OnHide.AddListener(() => GameWorld.FilesPool.Release(file));
             recoilForce += speed / 2 * (Vector2)file.transform.up;
         }
-        _rigidbody.velocity += recoilForce / _bulletsPerShot;
+        _rigidbody.velocity -= recoilForce / _bulletsPerShot;
         Instantiate(_filesFX, transform.position, Quaternion.LookRotation(transform.up));
         _nextShotTime = Time.time + 1f / FireRate;
         _ammo--;
