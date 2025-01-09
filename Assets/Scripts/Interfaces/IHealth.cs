@@ -2,11 +2,11 @@ using UnityEngine.Events;
 
 public interface IHealth
 {
-    public bool CanHeal => Health < MaxHealth;
-    public float HealthPercent => Health / MaxHealth;
+    public bool CanHeal => CurrentHealth < MaxHealth;
+    public float HealthPercent => CurrentHealth / MaxHealth;
 
     public float MaxHealth { get; }
-    public float Health { get; }
+    public float CurrentHealth { get; }
 
     public UnityEvent<float> OnHeal { get; }
     public UnityEvent<float> OnDamage { get; }

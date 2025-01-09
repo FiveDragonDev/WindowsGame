@@ -11,6 +11,6 @@ public sealed class Key : Pickupable
     protected override void OnCollisionEnter2D(Collision2D other)
     {
         base.OnCollisionEnter2D(other);
-        if (other.transform.TryGetComponent(out Door door) && door.NeedKey) Use(door);
+        if (other.transform.TryGetComponent(out Door door) && door.Locked) Use(door);
     }
 }

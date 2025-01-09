@@ -3,21 +3,34 @@ using UnityEngine.Events;
 
 public sealed class Door : MonoBehaviour, IInteractable
 {
-    public UnityEvent OnInteract => _onInteract;
-    public bool NeedKey => _needKey && !_open;
+    public UnityEvent OnInteractEvent => _onInteractEvent;
 
-    [SerializeField] private bool _needKey;
+    public bool Locked => _useKey && !_open;
+
+    [SerializeField] private bool _useKey;
+    [SerializeField] private GameObject _padlock;
 
     private bool _open;
-    private readonly UnityEvent _onInteract = new();
 
-    private void Start() => _open = !_needKey;
+    private readonly UnityEvent _onInteractEvent = new();
 
-    public void Open() => _open = true;
+    private void Start()
+    {
+        _open = !_useKey;
+        _padlock.SetActive(Locked);
+    }
+
+    public void Open()
+    {
+        _open = true;
+        _padlock.SetActive(Locked);
+    }
 
     public void Interact()
     {
         if (!_open) return;
-        OnInteract?.Invoke();
+        OnInteractEvent?.Invoke();
     }
+
+    public void OnInteract() => throw new System.NotImplementedException();
 }

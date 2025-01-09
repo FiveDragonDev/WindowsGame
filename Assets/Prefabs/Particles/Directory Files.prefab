@@ -222,8 +222,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 1, g: 1, b: 1, a: 0.5019608}
-      maxColor: {r: 1, g: 1, b: 1, a: 0.7529412}
+      minColor: {r: 1, g: 1, b: 1, a: 0.8784314}
+      maxColor: {r: 1, g: 1, b: 1, a: 0.6901961}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -979,8 +979,8 @@ ParticleSystem:
       time: 0
       countCurve:
         serializedVersion: 2
-        minMaxState: 3
-        scalar: 3
+        minMaxState: 0
+        scalar: 1
         minScalar: 1
         maxCurve:
           serializedVersion: 2
@@ -1053,31 +1053,31 @@ ParticleSystem:
           inWeight: 0
           outWeight: 0.2702308
         - serializedVersion: 3
-          time: 0.16455987
-          value: 0.9466677
-          inSlope: 1.0722843
-          outSlope: 1.0722843
+          time: 0.14009829
+          value: 0.9306665
+          inSlope: 1.8785676
+          outSlope: 1.8785676
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.9629695
+          inWeight: 0.5921548
           outWeight: 0.16418356
         - serializedVersion: 3
-          time: 0.9662635
-          value: 0.79226303
-          inSlope: -1.700845
-          outSlope: -1.700845
+          time: 0.79729575
+          value: 0.79759455
+          inSlope: -2.493917
+          outSlope: -2.493917
           tangentMode: 0
           weightedMode: 0
           inWeight: 0.33333334
-          outWeight: 1
+          outWeight: 0.6308175
         - serializedVersion: 3
           time: 1
           value: 0
-          inSlope: -7.803258
-          outSlope: -7.803258
+          inSlope: -5.0439186
+          outSlope: -5.0439186
           tangentMode: 0
           weightedMode: 0
-          inWeight: 1
+          inWeight: 0.3558785
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -1401,8 +1401,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 1928
-        atime2: 61449
+        atime1: 2621
+        atime2: 55705
         atime3: 65535
         atime4: 0
         atime5: 0

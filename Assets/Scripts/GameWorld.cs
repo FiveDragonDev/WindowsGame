@@ -12,6 +12,8 @@ public class GameWorld : MonoBehaviour
     [SerializeField] private MiniCursor _miniCursor;
     [SerializeField] private Money _money;
 
+    [SerializeField] private Transform _wallLeft, _wallRight;
+
     private GameObjectPool _filesPool;
     private GameObjectPool _miniCursorsPool;
     private GameObjectPool _moniesPool;
@@ -23,6 +25,9 @@ public class GameWorld : MonoBehaviour
     }
     private void Start()
     {
+        _wallLeft.position = Camera.main.ViewportToWorldPoint(new(0, 0.5f));
+        _wallRight.position = Camera.main.ViewportToWorldPoint(new(1, 0.5f));
+
         _filesPool = new(_file.gameObject);
         _miniCursorsPool = new(_miniCursor.gameObject);
         _moniesPool = new(_money.gameObject);

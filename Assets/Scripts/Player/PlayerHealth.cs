@@ -9,9 +9,9 @@ public class PlayerHealth : MonoBehaviour, IHealth
     public static PlayerHealth Singleton { get; private set; }
 
     public bool Shielded => Time.time < _nextDamageTime;
-    public float HealthPercent => Health / MaxHealth;
+    public float HealthPercent => CurrentHealth / MaxHealth;
     public float MaxHealth => _maxHealth;
-    public float Health => _health;
+    public float CurrentHealth => _health;
 
     public UnityEvent<float> OnHeal => _onHeal;
     public UnityEvent<float> OnDamage => _ondamage;
@@ -55,7 +55,7 @@ public class PlayerHealth : MonoBehaviour, IHealth
         if (amount < 0) throw new ArgumentOutOfRangeException(nameof(amount));
 
         _health -= amount;
-        if (_health < 0) Die();
+        if (_health <= 0) Die();
         _healthSlider.fillAmount = HealthPercent;
         _nextDamageTime = Time.time + 0.1f;
     }

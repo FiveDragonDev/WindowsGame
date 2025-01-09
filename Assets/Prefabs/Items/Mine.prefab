@@ -121,7 +121,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2625
+  m_Radius: 0.2
 --- !u!50 &5800585992944963405
 Rigidbody2D:
   serializedVersion: 4
@@ -134,7 +134,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 3
   m_LinearDrag: 7
   m_AngularDrag: 7
   m_GravityScale: 0
@@ -148,7 +148,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!114 &2390235181275402875
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,9 +161,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a0a6bafd2a58cd4fb7af995bd0573a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damageMultiplier: 1
   _explosionVFX: {fileID: 163285002896883555, guid: 052bccdaafd87c24fa24e211037e20db, type: 3}
-  _explosionOffset: 0.22
-  _explosionRadius: 4
-  _explosionForce: 6.5
-  _explosionDamage: 16
-  _maxHealth: 2
+  _explosionOffset: 0.25
+  _explosionRadius: 5
+  _explosionForce: 7.5
+  _explosionDamage: 20
+  _maxHealth: 1

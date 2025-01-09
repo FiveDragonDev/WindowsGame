@@ -20,10 +20,20 @@ public class Spring : MonoBehaviour
         get => _stiffness;
         set => _stiffness = Mathf.Max(value, 0);
     }
+    public float MinDistance
+    {
+        get => _minDistance;
+        set => _minDistance = Mathf.Max(value, 0);
+    }
     public float Damping
     {
         get => _damping;
         set => _damping = Mathf.Max(value, 0);
+    }
+    public float ConnectedRigidbodyDependence
+    {
+        get => _connectedRigidbodyDependence;
+        set => _connectedRigidbodyDependence = Mathf.Clamp01(value);
     }
     public Vector2 Anchor
     {
@@ -38,7 +48,9 @@ public class Spring : MonoBehaviour
 
     [SerializeField, Min(0)] private float _breakForce = float.PositiveInfinity;
     [SerializeField, Min(0)] private float _stiffness = 1;
-    [SerializeField, Range(0, 1)] private float _damping = 1;
+    [SerializeField, Min(0)] private float _minDistance = 0;
+    [SerializeField, Min(0)] private float _damping = 1;
+    [SerializeField, Range(0, 1)] private float _connectedRigidbodyDependence = 1;
     [SerializeField] private Vector2 _anchor = Vector2.zero;
     [SerializeField] private Rigidbody2D _connectedRigidbody;
 
@@ -48,16 +60,37 @@ public class Spring : MonoBehaviour
     private void Start() => _rigidbody = GetComponent<Rigidbody2D>();
     private void FixedUpdate()
     {
-        if (ConnectedRigidbody == null) return;
-        var force = SpringForce;
-        if (force > BreakForce)
+        if (_connectedRigidbody == null || Distance < MinDistance) return;
+        var direction = (ConnectedRigidbody.position - Position).normalized;
+        ApplyForces(direction);
+    }
+    private void ApplyForces(Vector2 direction)
+    {
+        var springForce = SpringForce * direction;
+        var dampingForce = Damping * _rigidbody.velocity;
+
+        if ((springForce - dampingForce).magnitude / 2 > _breakForce)
         {
             OnBreak?.Invoke();
             Destroy(this);
+            return;
         }
 
-        var direction = (ConnectedRigidbody.position - Position).normalized;
-        _rigidbody.AddForceAtPosition((direction * force) -
-            _rigidbody.velocity * Damping, Position);
+        _rigidbody.AddForce((springForce - dampingForce) / 2);
+        ConnectedRigidbody.AddForce((-springForce - dampingForce) *
+            _connectedRigidbodyDependence / 2);
+
+        ApplyTorque(direction);
     }
+    private void ApplyTorque(Vector2 direction)
+    {
+        var contactPoint = GetContactPoint(1f, Mathf.Atan2(direction.y, direction.x));
+        var leverArm = contactPoint - _rigidbody.position;
+        var torque = leverArm.x * _rigidbody.velocity.y - leverArm.y * _rigidbody.velocity.x;
+
+        _rigidbody.AddTorque(torque);
+    }
+    private Vector2 GetContactPoint(float radius, float angle) =>
+        (Vector2)transform.TransformPoint(new(radius *
+            Mathf.Cos(angle), radius * Mathf.Sin(angle)));
 }

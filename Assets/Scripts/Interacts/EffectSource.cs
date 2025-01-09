@@ -1,18 +1,72 @@
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 
-public abstract class EffectSource : MonoBehaviour, IInteractable
+public abstract class EffectSource : Pickupable
 {
-    public UnityEvent OnInteract => _onInteract;
+    public bool PlayerEntered { get; private set; }
+    public ReadOnlyCollection<IEffectable> Entered
+    {
+        get
+        {
+            foreach (IEffectable effectable in _entered)
+            {
+                if (effectable == null) _entered.Remove(effectable);
+            }
+            return _entered.ToList().AsReadOnly();
+        }
+    }
+
     public IEffect Effect => _effect;
 
     [SerializeReference] protected IEffect _effect;
 
-    private readonly UnityEvent _onInteract = new();
+    private readonly HashSet<IEffectable> _entered = new();
 
-    public virtual void Interact()
+    protected override void OnCollisionEnter2D(Collision2D collision)
     {
-        Effect.Apply();
-        OnInteract?.Invoke();
+        base.OnCollisionEnter2D(collision);
+        if (collision.collider.TryGetComponent(out IEffectable effectable))
+            AddEffectable(effectable);
     }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.TryGetComponent(out IEffectable effectable))
+            RemoveEffectable(effectable);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out IEffectable effectable))
+            AddEffectable(effectable);
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out IEffectable effectable))
+            AddEffectable(effectable);
+    }
+    private void OnMouseEnter()
+    {
+        AddEffectable(PlayerController.Singleton);
+        PlayerEntered = true;
+    }
+    private void OnMouseExit()
+    {
+        RemoveEffectable(PlayerController.Singleton);
+        PlayerEntered = false;
+    }
+
+    private void AddEffectable(IEffectable effectable)
+    {
+        OnEnter(effectable);
+        _entered.Add(effectable);
+    }
+    private void RemoveEffectable(IEffectable effectable)
+    {
+        OnExit(effectable);
+        _entered.Remove(effectable);
+    }
+
+    protected virtual void OnEnter(IEffectable effectable) { }
+    protected virtual void OnExit(IEffectable effectable) { }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Chip : EffectSource
+public sealed class Chip : EffectSource
 {
     [SerializeField, Min(0)] private float _healAmount = 1;
     [SerializeField, Min(0)] private float _healDuration = 1;
@@ -9,5 +9,12 @@ public class Chip : EffectSource
     {
         _effect = new RegenerationEffect(_healDuration, _healAmount);
         _effect.OnApply.AddListener(() => Destroy(gameObject));
+    }
+
+    protected override void OnUse() => _effect.Apply(PlayerController.Singleton);
+    protected override void OnEnter(IEffectable effectable)
+    {
+        if (effectable == PlayerController.Singleton as IEffectable) return;
+        _effect.Apply(effectable);
     }
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6670809561001189330}
   - component: {fileID: 2121935878042582189}
   - component: {fileID: 142366293701114177}
+  - component: {fileID: 1606211256860821285}
   m_Layer: 0
   m_Name: Directory
   m_TagString: Untagged
@@ -76,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f8282cae64bd8d849b40cc2491ea56f4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 60e3d2fefa441e148a2ffece0c7a43f6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -119,18 +120,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.033333335, y: 0.025}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.75, y: 0.75}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 0.6375}
+  m_Size: {x: 0.6, y: 0.8}
   m_EdgeRadius: 0
 --- !u!50 &2121935878042582189
 Rigidbody2D:
@@ -171,13 +172,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08294ecff8ff1974cb0b8f768e6715ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damageMultiplier: 1
   _filesFX: {fileID: 8284166552274037440, guid: 5e454c0f8190b1543b68397a30bcf520, type: 3}
   _fileSpeed: 9
   _damage: 6
   _fireRate: 6
   _bulletsPerShot: 1
   _accuracy: 6
-  _maxAmmo: 8
+  _maxAmmo: 12
   _full: {fileID: 21300000, guid: 60e3d2fefa441e148a2ffece0c7a43f6, type: 3}
   _empty: {fileID: 21300000, guid: cf026024cbbf06d488565acef7a1b8ac, type: 3}
-  _closed: {fileID: 21300000, guid: f8282cae64bd8d849b40cc2491ea56f4, type: 3}
+--- !u!114 &1606211256860821285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1734815125791852633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ec58a8e8e5cf6b4a8d65a40c12fe496, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: Idk
+  _offset: {x: 0, y: -0.66}
+  _prefab: {fileID: 7783493257623277868, guid: 97ce2f93f0e48ea4b9afa8b701c7e072, type: 3}

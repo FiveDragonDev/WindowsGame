@@ -14,11 +14,11 @@ public abstract class TemporaryEffect : IEffect
 
     public TemporaryEffect(float duration) => Duration = duration;
 
-    public virtual void Apply()
+    public virtual void Apply(IEffectable other)
     {
         OnApply?.Invoke();
         _stopTime = Time.time + Duration;
-        Player.Singleton.AddEffect(this);
+        other.AddEffect(this);
     }
-    public abstract void Use();
+    public abstract void Use(IEffectable effectable);
 }

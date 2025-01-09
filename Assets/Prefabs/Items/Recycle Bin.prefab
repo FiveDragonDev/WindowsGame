@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8683907542479976951}
   - component: {fileID: 4626926168086929634}
   - component: {fileID: 7139266029927475506}
+  - component: {fileID: 3824558875543825592}
   m_Layer: 0
   m_Name: Recycle Bin
   m_TagString: Untagged
@@ -123,7 +124,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.75, y: 0.75}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -131,13 +132,12 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.12389159, y: 0.39753455}
-      - {x: -0.3947177, y: 0.30713138}
-      - {x: -0.32429695, y: -0.21184042}
-      - {x: 0.028249502, y: -0.38666067}
-      - {x: 0.22210956, y: -0.305504}
-      - {x: 0.33513546, y: 0.1289083}
-      - {x: 0.3415277, y: 0.23842816}
+    - - {x: -0.05633807, y: 0.44352165}
+      - {x: -0.39482546, y: 0.33507875}
+      - {x: -0.30978322, y: -0.32904872}
+      - {x: 0.043932676, y: -0.44587356}
+      - {x: 0.29682422, y: -0.36185524}
+      - {x: 0.39642644, y: 0.2923314}
   m_UseDelaunayMesh: 0
 --- !u!50 &4626926168086929634
 Rigidbody2D:
@@ -151,7 +151,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 2.5
   m_LinearDrag: 7
   m_AngularDrag: 7
   m_GravityScale: 0
@@ -178,12 +178,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bcaad1d9890a794b9ac0b106794db61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damageMultiplier: 1
   _filesFX: {fileID: 8284166552274037440, guid: 2bac35410a343174c82c4872b4b3bd16, type: 3}
   _fileSpeed: 10
   _damage: 3
   _fireRate: 5
-  _bulletsPerShot: 5
+  _bulletsPerShot: 4
   _accuracy: 3
   _maxAmmo: 15
   _full: {fileID: 21300000, guid: 9fe4402167c063544b68225e12828037, type: 3}
   _empty: {fileID: 21300000, guid: d522f6403b7581d44b02d45e98c5b7ac, type: 3}
+--- !u!114 &3824558875543825592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6717404543244197747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ec58a8e8e5cf6b4a8d65a40c12fe496, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: Recycle Bin
+  _offset: {x: 0, y: -0.66}
+  _prefab: {fileID: 7783493257623277868, guid: 97ce2f93f0e48ea4b9afa8b701c7e072, type: 3}

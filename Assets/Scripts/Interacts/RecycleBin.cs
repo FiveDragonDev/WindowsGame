@@ -19,8 +19,12 @@ public class RecycleBin : StandartFileGunBase
         {
             transform.up = Vector2.Lerp(transform.up, _direction, Time.deltaTime * 14);
             transform.rotation = Quaternion.Euler(0, 0, transform.eulerAngles.z);
-            if (Time.time > _nextShotTime) Shoot();
         }
+    }
+
+    protected override void OnUse()
+    {
+        if (Time.time > _nextShotTime) Shoot();
     }
 
     public override void Shoot()

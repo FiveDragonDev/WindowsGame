@@ -11,10 +11,10 @@ public sealed class HealEffect : IEffect
 
     public HealEffect(float healAmount) => HealAmount = healAmount;
 
-    public void Apply()
+    public void Apply(IEffectable other)
     {
-        var health = PlayerHealth.Singleton;
-        if (health.Health >= health.MaxHealth) return;
+        var health = other.Health;
+        if (health.CurrentHealth >= health.MaxHealth) return;
         health.Heal(HealAmount);
         OnApply?.Invoke();
     }

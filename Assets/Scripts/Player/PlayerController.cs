@@ -1,10 +1,14 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using TMPro;
 using UnityEngine;
 
-public class Player : MonoBehaviour, IGun
+public sealed class PlayerController : MonoBehaviour, IGun, IEffectable
 {
-    public static Player Singleton { get; private set; }
+    public static PlayerController Singleton { get; private set; }
+
+    public IHealth Health => PlayerHealth.Singleton;
+    public ReadOnlyCollection<TemporaryEffect> Effects => _effects.AsReadOnly();
 
     public int Monies { get; private set; }
 
@@ -16,7 +20,7 @@ public class Player : MonoBehaviour, IGun
     [SerializeField, Min(0)] private float _bulletDamage = 1;
     [SerializeField] private TextMeshProUGUI _moniesText;
 
-    private readonly List<TemporaryEffect> _effects = new();
+    private List<TemporaryEffect> _effects = new();
 
     private Spring _joint;
     private Pickupable _pickupable;
@@ -34,43 +38,59 @@ public class Player : MonoBehaviour, IGun
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _camera = Camera.main;
-        AddMonies(0);
+        _moniesText.text = Monies.ToString();
     }
     private void Update()
     {
-        foreach (var effect in _effects)
-            if (effect.IsUsing) effect.Use();
+        HandleEffects();
 
         transform.position = _camera.ScreenToWorldPoint(Input.mousePosition);
 
         var money = UnityUtils.GetClosestObjectByType<Money>();
         if (money != null && Vector3.Distance(transform.position,
-            money.transform.position) < 0.2f)
+            money.transform.position) < 0.75f)
         {
             AddMonies(1);
             money.Destroy();
         }
 
-        if (Input.GetMouseButtonDown(0) && !_pickupable)
+        if (!_pickupable)
         {
-            _hit = Physics2D.Raycast(transform.position, Vector3.forward);
-            if (_hit && !_hit.collider.isTrigger)
+            if (Input.GetMouseButtonDown(1)) Shoot();
+            if (Input.GetMouseButtonDown(0))
             {
-                if (_hit.collider.TryGetComponent(out IInteractable interactable))
-                    Interact(interactable);
+                _hit = Physics2D.Raycast(transform.position, Vector3.forward);
+                if (_hit && !_hit.collider.isTrigger)
+                {
+                    if (_hit.collider.TryGetComponent(out IInteractable interactable))
+                        Interact(interactable);
+                }
             }
-            else Shoot();
         }
-        else if (Input.GetMouseButtonUp(0) && _pickupable) Throw();
+        else
+        {
+            if (Input.GetMouseButtonUp(0)) Throw();
+            if (Input.GetMouseButtonDown(1)) Use(_pickupable);
+        }
     }
 
     public void AddMonies(int amount)
     {
         Monies += amount;
-        _moniesText.text = Monies.ToString("000000");
+        _moniesText.text = Monies.ToString();
+    }
+    public void HandleEffects()
+    {
+        List<TemporaryEffect> effects = new(Effects);
+        foreach (var effect in _effects)
+            if (effect.IsUsing) effect.Use(this);
+            else effects.Remove(effect);
+        _effects = effects;
     }
     public void AddEffect(TemporaryEffect effect) => _effects.Add(effect);
+    public void ClearEffects() => _effects.Clear();
 
+    private void Use(IInteractable interactable) => interactable.Use();
     private void Interact(IInteractable interactable)
     {
         if ((_pickupable = interactable as Pickupable) && _pickupable.CanPickup) PickUp();
@@ -82,7 +102,7 @@ public class Player : MonoBehaviour, IGun
         _joint = _pickupable.gameObject.AddComponent<Spring>();
         _joint.ConnectedRigidbody = _rigidbody;
         _joint.Anchor = transform.position - _pickupable.transform.position;
-        _joint.BreakForce = 900;
+        _joint.BreakForce = 1000;
         _joint.Stiffness = 600;
         _joint.Damping = 18;
         _joint.OnBreak.AddListener(Throw);
@@ -99,8 +119,8 @@ public class Player : MonoBehaviour, IGun
     {
         var cursor = GameWorld.MiniCursorsPool.GetItem().GetComponent<MiniCursor>();
         cursor.transform.position = transform.position;
-        var enemy = UnityUtils.GetClosestObjectByType<Enemy>();
         var direction = Vector2.up;
+        var enemy = UnityUtils.GetClosestObjectByType<Enemy>();
         if (enemy) direction = (enemy.transform.position - transform.position).normalized;
         cursor.transform.up = direction;
         cursor.Setup(this, _bulletSpeed, _bulletDamage);

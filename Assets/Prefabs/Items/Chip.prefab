@@ -123,7 +123,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.75, y: 0.75}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 0.48, y: 0.48}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -131,10 +131,12 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.11332297, y: -0.3740396}
-      - {x: 0.48640752, y: -0.060874194}
-      - {x: 0.14422321, y: 0.28850657}
-      - {x: -0.48503268, y: -0.01503915}
+    - - {x: -0.04728377, y: -0.30586985}
+      - {x: 0.40693808, y: -0.14937316}
+      - {x: 0.40569305, y: 0.10433489}
+      - {x: 0.104427814, y: 0.2089158}
+      - {x: -0.42186654, y: 0.027604163}
+      - {x: -0.4140762, y: -0.1728838}
   m_UseDelaunayMesh: 0
 --- !u!50 &2025114353388844408
 Rigidbody2D:
@@ -148,7 +150,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.7
   m_LinearDrag: 7
   m_AngularDrag: 7
   m_GravityScale: 0
@@ -162,7 +164,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 0
 --- !u!114 &901470796187732827
 MonoBehaviour:
   m_ObjectHideFlags: 0

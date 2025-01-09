@@ -7,5 +7,6 @@ public class RegenerationEffect : TemporaryEffect
     public RegenerationEffect(float duration, float healAmount) :
         base(duration) => HealPerSecond = healAmount;
 
-    public override void Use() => PlayerHealth.Singleton.Heal(HealPerSecond * Time.deltaTime);
+    public override void Use(IEffectable effectable) =>
+        effectable.Health.Heal(HealPerSecond * Time.deltaTime);
 }

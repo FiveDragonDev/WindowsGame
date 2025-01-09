@@ -32,7 +32,7 @@ public abstract class StandartBulletBase : MonoBehaviour, IBullet
         if (hit.TryGetComponent(out IHealth health)) health.Damage(Damage);
         if (hit.TryGetComponent(out Rigidbody2D rigidbody))
         {
-            rigidbody.AddForce(_velocity);
+            rigidbody.AddForceAtPosition(_velocity, transform.position);
             _velocity -= rigidbody.velocity * rigidbody.mass;
         }
         _hited.Add(hit);

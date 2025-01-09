@@ -5,7 +5,7 @@ using UnityEngine.Events;
 public class Mine : Pickupable, IHealth
 {
     public float MaxHealth => _maxHealth;
-    public float Health => _health;
+    public float CurrentHealth => _health;
 
     public UnityEvent<float> OnHeal => _onHeal;
     public UnityEvent<float> OnDamage => _ondamage;
@@ -42,7 +42,7 @@ public class Mine : Pickupable, IHealth
         {
             var value = 1 - Quad((_explodeTime - Time.time) / _explosionOffset);
             _renderer.color = Color.Lerp(Color.white, Color.red, value);
-            transform.localScale = Vector3.one + Vector3.one * value / 3;
+            transform.localScale = Vector3.one + Vector3.one * value / 2;
             if (Time.time > _explodeTime) DoExplosion();
         }
 
@@ -59,28 +59,36 @@ public class Mine : Pickupable, IHealth
     {
         var colliders = new Collider2D[8];
         _ = Physics2D.OverlapCircleNonAlloc(transform.position, _explosionRadius, colliders);
+        if (Vector2.Distance(transform.position,
+            PlayerController.Singleton.transform.position) < _explosionRadius)
+            Damage(PlayerController.Singleton.transform);
         foreach (var collider in colliders)
         {
             if (collider == null) continue;
-            var direction = collider.transform.position - transform.position;
+            Damage(collider.transform);
+        }
+        _explode = false;
+
+        Instantiate(_explosionVFX, transform.position, Quaternion.identity);
+        Destroy(gameObject);
+
+        void Damage(Transform transform)
+        {
+            var direction = transform.position - base.transform.position;
             var distance = direction.magnitude;
 
-            if (collider.TryGetComponent(out Rigidbody2D rigidbody))
+            if (transform.TryGetComponent(out Rigidbody2D rigidbody))
             {
                 float force = _explosionForce * (1 - (distance / _explosionRadius));
                 rigidbody.AddForce(direction.normalized * force / Time.deltaTime);
             }
-            if (collider.TryGetComponent(out IHealth health) &&
+            if (transform.TryGetComponent(out IHealth health) &&
                 (this is not IHealth || health != this as IHealth))
             {
                 var damage = _explosionDamage * (1 - (distance / _explosionRadius));
                 if (damage > 0) health.Damage(damage);
             }
         }
-        _explode = false;
-
-        Instantiate(_explosionVFX, transform.position, Quaternion.identity);
-        Destroy(gameObject);
     }
 
     public void Heal(float amount)

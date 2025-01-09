@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class File : StandartBulletBase
 {
-    public override float CheckRadius => 0.1f;
+    public override float CheckRadius => 0.25f;
 
     [SerializeField] private Sprite[] _sprites;
 

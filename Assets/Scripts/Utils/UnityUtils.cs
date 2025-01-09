@@ -17,7 +17,7 @@ public static class UnityUtils
 
         foreach (var currentEnemy in enemies)
         {
-            float currentDistance = Vector2.Distance(Player.Singleton
+            float currentDistance = Vector2.Distance(PlayerController.Singleton
                 .transform.position, currentEnemy.transform.position);
             if (currentDistance < distance)
             {

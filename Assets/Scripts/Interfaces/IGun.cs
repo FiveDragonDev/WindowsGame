@@ -36,9 +36,9 @@ public abstract class StandartFileGunBase : Pickupable, IGun
         _rigidbody = GetComponent<Rigidbody2D>();
         _ammo = _maxAmmo;
     }
-    private void Update()
+    protected override void OnUse()
     {
-        if (Picked && Time.time > _nextShotTime) Shoot();
+        if (Time.time > _nextShotTime) Shoot();
     }
 
     public virtual void Shoot()

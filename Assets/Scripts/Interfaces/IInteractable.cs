@@ -2,7 +2,8 @@ using UnityEngine.Events;
 
 public interface IInteractable
 {
-    public UnityEvent OnInteract { get; }
+    public UnityEvent OnInteractEvent { get; }
 
-    public void Interact() => OnInteract?.Invoke();
+    public void Interact() { }
+    public void Use() { }
 }
