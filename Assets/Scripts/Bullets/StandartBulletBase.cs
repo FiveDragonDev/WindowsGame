@@ -6,6 +6,7 @@ public abstract class StandartBulletBase : MonoBehaviour, IBullet
 {
     public UnityEvent OnHide { get; } = new();
 
+    public UnityEvent<Collider2D> OnHit { get; private set; } = new();
     public Vector2 Velocity => _velocity;
     public virtual int RemainingShots { get; private set; } = 1;
     public virtual float CheckRadius { get; } = 0.05f;
@@ -21,7 +22,7 @@ public abstract class StandartBulletBase : MonoBehaviour, IBullet
     protected virtual void Update()
     {
         _velocity += Speed * (Vector2)transform.up;
-        _velocity -= _velocity * 0.5f;
+        _velocity -= 25 * Time.deltaTime * _velocity;
         transform.position += (Vector3)_velocity * Time.deltaTime;
 
         var hit = Physics2D.OverlapCircle(transform.position, CheckRadius);
@@ -35,6 +36,7 @@ public abstract class StandartBulletBase : MonoBehaviour, IBullet
             rigidbody.AddForceAtPosition(_velocity, transform.position);
             _velocity -= rigidbody.velocity * rigidbody.mass;
         }
+        OnHit.Invoke(hit);
         _hited.Add(hit);
         if (--RemainingShots <= 0) Hide();
     }

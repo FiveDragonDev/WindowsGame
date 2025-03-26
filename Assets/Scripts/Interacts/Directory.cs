@@ -21,6 +21,7 @@ public class Directory : StandartFileGunBase
 
     public override void Shoot()
     {
+        if (_rigidbody.velocity != Vector2.zero) _direction = _rigidbody.velocity.normalized;
         base.Shoot();
         if (_ammo <= 0) _renderer.sprite = _empty;
     }

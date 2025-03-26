@@ -20,6 +20,7 @@ public abstract class EffectSource : Pickupable
 
     public IEffect Effect => _effect;
 
+    [SerializeField] protected bool _usePlayer;
     [SerializeReference] protected IEffect _effect;
 
     private readonly HashSet<IEffectable> _entered = new();
@@ -43,10 +44,11 @@ public abstract class EffectSource : Pickupable
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out IEffectable effectable))
-            AddEffectable(effectable);
+            RemoveEffectable(effectable);
     }
     private void OnMouseEnter()
     {
+        if (_usePlayer) return;
         AddEffectable(PlayerController.Singleton);
         PlayerEntered = true;
     }

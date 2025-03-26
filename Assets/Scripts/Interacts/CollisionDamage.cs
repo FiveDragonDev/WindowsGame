@@ -4,7 +4,7 @@ using UnityEngine;
 public class CollisionDamage : MonoBehaviour
 {
 
-    [SerializeField, Min(0)] protected float _damageMultiplier = 1;
+    [SerializeField, Min(0)] protected float _collisionDamageMultiplier = 1;
 
     protected Rigidbody2D _rigidbody;
 
@@ -16,7 +16,7 @@ public class CollisionDamage : MonoBehaviour
         if (other.rigidbody != null) otherImpulse *= other.rigidbody.mass;
         var relativeImpulse = thisImpulse - otherImpulse;
         float collisionSpeed = relativeImpulse.magnitude;
-        float damage = collisionSpeed * _damageMultiplier / 10;
+        float damage = collisionSpeed * _collisionDamageMultiplier / 10;
 
         if (TryGetComponent(out IHealth health)) health.Damage(damage);
         if (other.collider.TryGetComponent(out health)) health.Damage(damage);

@@ -75,10 +75,15 @@ public class Enemy : MonoBehaviour, IHealth, IEffectable
     }
     public void Damage(float amount)
     {
+        if (_dead) return;
         if (amount < 0) throw new ArgumentOutOfRangeException(nameof(amount));
 
         OnDamage?.Invoke(amount);
         _health -= amount;
+        var damageText = GameWorld.DamagePool.GetItem().GetComponent<FlowNumbers>();
+        damageText.transform.position = transform.position;
+        damageText.Initialize(amount);
+        damageText.OnHide.AddListener(() => GameWorld.DamagePool.Release(damageText.gameObject));
         if (_health <= 0) Die();
     }
     public void Die()

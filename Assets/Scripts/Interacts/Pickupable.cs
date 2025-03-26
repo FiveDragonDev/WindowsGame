@@ -26,6 +26,11 @@ public class Pickupable : CollisionDamage, IInteractable
         OnUse();
         OnUseEvent?.Invoke();
     }
+    public void PointerUse()
+    {
+        OnPointerUse();
+        OnUseEvent?.Invoke();
+    }
 
     public void Throw()
     {
@@ -35,6 +40,7 @@ public class Pickupable : CollisionDamage, IInteractable
     }
 
     protected virtual void OnUse() { }
+    protected virtual void OnPointerUse() { }
     protected virtual void OnInteract() { }
     protected virtual void OnThrow() { }
 }

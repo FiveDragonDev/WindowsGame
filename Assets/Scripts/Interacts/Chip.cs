@@ -12,6 +12,7 @@ public sealed class Chip : EffectSource
     }
 
     protected override void OnUse() => _effect.Apply(PlayerController.Singleton);
+    protected override void OnPointerUse() => _effect.Apply(PlayerController.Singleton);
     protected override void OnEnter(IEffectable effectable)
     {
         if (effectable == PlayerController.Singleton as IEffectable) return;

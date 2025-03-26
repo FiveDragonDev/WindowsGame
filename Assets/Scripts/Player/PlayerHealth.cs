@@ -55,6 +55,10 @@ public class PlayerHealth : MonoBehaviour, IHealth
         if (amount < 0) throw new ArgumentOutOfRangeException(nameof(amount));
 
         _health -= amount;
+        var damageText = GameWorld.DamagePool.GetItem().GetComponent<FlowNumbers>();
+        damageText.transform.position = transform.position;
+        damageText.Initialize(amount);
+        damageText.OnHide.AddListener(() => GameWorld.DamagePool.Release(damageText.gameObject));
         if (_health <= 0) Die();
         _healthSlider.fillAmount = HealthPercent;
         _nextDamageTime = Time.time + 0.1f;

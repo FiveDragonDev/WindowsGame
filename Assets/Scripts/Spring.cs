@@ -35,6 +35,16 @@ public class Spring : MonoBehaviour
         get => _connectedRigidbodyDependence;
         set => _connectedRigidbodyDependence = Mathf.Clamp01(value);
     }
+    public float SelfDependence
+    {
+        get => _selfDependence;
+        set => _selfDependence = Mathf.Clamp01(value);
+    }
+    public bool UseRotation
+    {
+        get => _useRotation;
+        set => _useRotation = value;
+    }
     public Vector2 Anchor
     {
         get => _anchor;
@@ -51,6 +61,8 @@ public class Spring : MonoBehaviour
     [SerializeField, Min(0)] private float _minDistance = 0;
     [SerializeField, Min(0)] private float _damping = 1;
     [SerializeField, Range(0, 1)] private float _connectedRigidbodyDependence = 1;
+    [SerializeField, Range(0, 1)] private float _selfDependence = 1;
+    [SerializeField] private bool _useRotation = true;
     [SerializeField] private Vector2 _anchor = Vector2.zero;
     [SerializeField] private Rigidbody2D _connectedRigidbody;
 
@@ -76,11 +88,12 @@ public class Spring : MonoBehaviour
             return;
         }
 
-        _rigidbody.AddForce((springForce - dampingForce) / 2);
+        _rigidbody.AddForce((springForce - dampingForce) *
+            SelfDependence / 2);
         ConnectedRigidbody.AddForce((-springForce - dampingForce) *
-            _connectedRigidbodyDependence / 2);
+            ConnectedRigidbodyDependence / 2);
 
-        ApplyTorque(direction);
+        if (UseRotation) ApplyTorque(direction);
     }
     private void ApplyTorque(Vector2 direction)
     {

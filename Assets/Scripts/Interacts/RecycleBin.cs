@@ -14,18 +14,26 @@ public class RecycleBin : StandartFileGunBase
     }
     private void Update()
     {
-        if (_rigidbody.velocity != Vector2.zero) _direction = _rigidbody.velocity.normalized;
-        transform.up = Vector2.Lerp(transform.up, _direction, Time.deltaTime * 14);
+        if (!Picked) return;
+        transform.up = Vector2.Lerp(transform.up,
+            _rigidbody.velocity.normalized, Time.deltaTime * 14);
         transform.rotation = Quaternion.Euler(0, 0, transform.eulerAngles.z);
     }
 
-    protected override void OnUse()
+    protected override void OnInteract()
     {
-        if (Time.time > _nextShotTime) Shoot();
+        base.OnInteract();
+        _rigidbody.freezeRotation = true;
+    }
+    protected override void OnThrow()
+    {
+        base.OnThrow();
+        _rigidbody.freezeRotation = false;
     }
 
     public override void Shoot()
     {
+        _direction = transform.up;
         base.Shoot();
         if (_ammo <= 0) _renderer.sprite = _empty;
     }

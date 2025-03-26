@@ -68,7 +68,7 @@ public sealed class GameObjectPool : Pool<GameObject>
     }
     public override void Release(GameObject item)
     {
-        if (!_used.Contains(item) || _used.Remove(item))
+        if (_used.Remove(item))
         {
             item.SetActive(false);
             _available.Enqueue(item);

@@ -74,8 +74,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1574162853
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4e484ad7f0156b542a88fa3884fea0fd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -206,9 +206,9 @@ LineRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingLayerID: -1401496815
+  m_SortingLayer: 1
+  m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
@@ -220,7 +220,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.0125
+        value: 0.015
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -232,8 +232,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.07924521, g: 0.06683511, b: 0.06683511, a: 1}
-      key1: {r: 0.10943389, g: 0.104684874, b: 0.104684874, a: 1}
+      key0: {r: 0.10943389, g: 0.104684874, b: 0.104684874, a: 0.9607843}
+      key1: {r: 0.07924521, g: 0.06683511, b: 0.06683511, a: 0.98039216}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -283,4 +283,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 856db1225285a1f479850e408fafe51c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damageMultiplier: 1
+  _collisionDamageMultiplier: 1
+  _damage: 6
+  _damageInterval: 1

@@ -34,19 +34,18 @@ public abstract class StandartFileGunBase : Pickupable, IGun
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _ammo = _maxAmmo;
+        _ammo = MaxAmmo;
     }
-    protected override void OnUse()
-    {
-        if (Time.time > _nextShotTime) Shoot();
-    }
+
+    protected override void OnUse() => Shoot();
+    protected override void OnPointerUse() => Shoot();
 
     public virtual void Shoot()
     {
-        if (_ammo <= 0 || _bulletsPerShot <= 0) return;
+        if (Time.time <= _nextShotTime ||
+            _ammo <= 0 || _bulletsPerShot <= 0) return;
 
         Vector2 recoilForce = Vector2.zero;
-        if (_rigidbody.velocity != Vector2.zero) _direction = _rigidbody.velocity.normalized;
         for (int i = 0; i < BulletsPerShot; i++)
         {
             var file = GameWorld.FilesPool.GetItem();
@@ -59,7 +58,7 @@ public abstract class StandartFileGunBase : Pickupable, IGun
             fileComponent.OnHide.AddListener(() => GameWorld.FilesPool.Release(file));
             recoilForce += speed / 2 * (Vector2)file.transform.up;
         }
-        _rigidbody.velocity -= recoilForce / _bulletsPerShot;
+        _rigidbody.velocity -= recoilForce / BulletsPerShot;
         Instantiate(_filesFX, transform.position, Quaternion.LookRotation(transform.up));
         _nextShotTime = Time.time + 1f / FireRate;
         _ammo--;

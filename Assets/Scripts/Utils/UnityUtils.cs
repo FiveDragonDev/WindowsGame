@@ -7,6 +7,8 @@ public static class UnityUtils
     public static T GetOrAddComponent<T>(this Component component) where T : Component =>
         component.GetComponent<T>() ?? component.gameObject.AddComponent<T>();
 
+    public static T[] GetObjectsByType<T>() where T : Component =>
+        Object.FindObjectsByType<T>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
     public static T GetClosestObjectByType<T>() where T : Component
     {
         float distance = float.PositiveInfinity;

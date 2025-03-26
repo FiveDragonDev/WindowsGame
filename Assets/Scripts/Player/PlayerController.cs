@@ -48,7 +48,7 @@ public sealed class PlayerController : MonoBehaviour, IGun, IEffectable
 
         var money = UnityUtils.GetClosestObjectByType<Money>();
         if (money != null && Vector3.Distance(transform.position,
-            money.transform.position) < 0.75f)
+            money.transform.position) < 1.5f)
         {
             AddMonies(1);
             money.Destroy();
@@ -62,7 +62,7 @@ public sealed class PlayerController : MonoBehaviour, IGun, IEffectable
                 if (_hit.collider.TryGetComponent(out IInteractable interactable))
                 {
                     if (Input.GetMouseButtonDown(0)) Interact(interactable);
-                    if (Input.GetMouseButtonDown(1)) Use(interactable);
+                    if (Input.GetMouseButtonDown(1)) PointerUse(interactable);
                 }
             }
             else if (Input.GetMouseButtonDown(1)) Shoot();
@@ -71,6 +71,7 @@ public sealed class PlayerController : MonoBehaviour, IGun, IEffectable
         {
             if (Input.GetMouseButtonUp(0)) Throw();
             if (Input.GetMouseButton(1)) Use(_pickupable);
+            if (Input.GetMouseButtonDown(1)) PointerUse(_pickupable);
         }
     }
 
@@ -90,7 +91,8 @@ public sealed class PlayerController : MonoBehaviour, IGun, IEffectable
     public void AddEffect(TemporaryEffect effect) => _effects.Add(effect);
     public void ClearEffects() => _effects.Clear();
 
-    private void Use(IInteractable interactable) => interactable.Use();
+    private void Use(IInteractable interactable) => interactable?.Use();
+    private void PointerUse(IInteractable interactable) => interactable?.PointerUse();
     private void Interact(IInteractable interactable)
     {
         if ((_pickupable = interactable as Pickupable) && _pickupable.CanPickup) PickUp();
